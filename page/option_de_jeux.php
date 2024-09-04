@@ -1,6 +1,6 @@
 
 <?php
-require_once 'jeu.php';
+require_once 'jeux.php';
 
 ?>
 
@@ -13,7 +13,7 @@ require_once 'jeu.php';
 </head>
 <body>
     <h1>Récupération d'Images</h1>
-    <form action="jeu.php" method="post">
+    <form action="jeux.php" method="post">
         <label for="number_of_images">Choisissez le nombre d'images à afficher :</label>
         <select id="number_of_images" name="number_of_images" required>
             <option value="3">3</option>

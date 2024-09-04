@@ -1,5 +1,4 @@
 <?php
-session_start();
 class Carte
 {
     private $pdo_inserCarte;
@@ -63,5 +62,23 @@ class Carte
         }
         return $images;
     }
+    public function shuffleImages($imagesFromDB) {
+        $melenge = [];
+    
+        // Récupérer toutes les images dans un tableau unique
+        foreach ($imagesFromDB as $imagePair) {
+            $melenge[] = $imagePair['image1'];
+            $melenge[] = $imagePair['image2'];
+        }
+    
+        // Mélanger les images
+        shuffle($melenge);
+    
+        return $melenge;
+    }
+    public function __destruct() {
+        $this->pdo_inserCarte = null;
+    }   
 }
+
 ?>
