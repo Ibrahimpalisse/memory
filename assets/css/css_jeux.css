@@ -1,0 +1,61 @@
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+          
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card {
+            width: 16vh;
+            height: 28vh;
+            margin: 10px;
+            perspective: 1000px; /* Perspective pour l'effet 3D */
+        }
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg); /* Rotation de 180 degrés pour le retournement */
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; /* Masque le dos lors du retournement */
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .card-front {
+            background-color: grey; /* Couleur de la face avant (couverture) */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-front img {
+            width: 100%; /* Taille de l'image de couverture pour qu'elle couvre toute la carte */
+            height: 100%;
+            object-fit: cover; /* Ajuste l'image pour qu'elle remplisse le conteneur sans distorsion */
+        }
+        .card-back {
+            background-color: #f9f9f9;
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-back img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+    

@@ -46,7 +46,7 @@ $isConnected = $user->isconnected();
             <?php if ($isConnected): ?>
                 <a href="./page/profil.php">Profil</a>
                 <a href="best.php">Le Meilleur</a>
-                <a href="play.php">Jouer</a>
+                <a href="./page/option_de_jeux.php">Jouer</a>
                 <a href="./treatment/logout.php">Déconnexion</a>
             <?php else: ?>
                 <a href="./page/login.php">Se Connecter</a>
