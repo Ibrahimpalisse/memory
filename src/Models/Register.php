@@ -7,19 +7,16 @@ use PDOException;
 
 class Register
 {
-    private $id;
-    private $username;
-    private $email;
-    private $password;
+    private $id_user;
     private $pdo;
 
     public function __construct()
     {
-        // Connexion directe à la base de données dans le constructeur
+        // Connexion à la base de données
         $host = 'localhost'; // Remplacez par votre hôte
-        $dbname = 'cinetech'; // Remplacez par le nom de votre base de données
-        $username = 'root'; // Nom d'utilisateur de la base
-        $password = ''; // Mot de passe de la base
+        $dbname = 'memory'; // Nom de la base de données
+        $username = 'root'; // Nom d'utilisateur
+        $password = ''; // Mot de passe
 
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
@@ -30,11 +27,11 @@ class Register
         }
     }
 
-    public function register($username, $email, $password)
+    public function register($login, $email, $password)
     {
         try {
             // Vérifier si l'email existe déjà
-            $checkEmail = "SELECT id FROM users WHERE email = :email";
+            $checkEmail = "SELECT id_user FROM user WHERE email = :email";
             $stmtEmail = $this->pdo->prepare($checkEmail);
             $stmtEmail->bindParam(':email', $email, PDO::PARAM_STR);
             $stmtEmail->execute();
@@ -43,22 +40,31 @@ class Register
                 return "Cet email est déjà utilisé.";
             }
 
+            // Vérifier si le login existe déjà
+            $checkLogin = "SELECT id_user FROM user WHERE login = :login";
+            $stmtLogin = $this->pdo->prepare($checkLogin);
+            $stmtLogin->bindParam(':login', $login, PDO::PARAM_STR);
+            $stmtLogin->execute();
+
+            if ($stmtLogin->rowCount() > 0) {
+                return "Ce login est déjà utilisé.";
+            }
+
             // Hashage du mot de passe
             $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
             // Requête d'insertion
-            $insert = "INSERT INTO users (username, email, password) 
-                       VALUES (:username, :email, :password)";
+            $insert = "INSERT INTO user (login, email, passwrd) 
+                       VALUES (:login, :email, :password)";
             $stmt = $this->pdo->prepare($insert);
-            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->bindParam(':login', $login, PDO::PARAM_STR);
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->bindParam(':password', $passwordHash, PDO::PARAM_STR);
 
             // Exécuter la requête
             if ($stmt->execute()) {
-                $this->id = $this->pdo->lastInsertId(); // Récupérer l'ID inséré
-                $_SESSION['user_id'] = intval($this->id); // Stocker l'ID en session
-                return true;
+                $this->id_user = $this->pdo->lastInsertId(); // Récupérer l'ID inséré
+                return true; // Succès
             }
             return "Erreur lors de l'inscription.";
         } catch (PDOException $e) {
@@ -68,6 +74,6 @@ class Register
 
     public function getId()
     {
-        return intval($this->id);
+        return intval($this->id_user);
     }
 }
