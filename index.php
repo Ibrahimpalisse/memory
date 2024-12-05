@@ -6,6 +6,7 @@ use App\Controllers\HomeController;
 use App\Controllers\RegisterController;
 use App\Controllers\LoginController;
 use App\Controllers\LogoutControleur;
+use App\Controllers\ProfileController;
 
 try {
     // Récupérer l'URL et extraire le chemin
@@ -38,7 +39,11 @@ try {
             $controller = new LogoutControleur();
             $controller->logout();
             break;
-
+        case 'profile':  
+            // Page de profil
+            $controller = new ProfileController();
+            $controller->profile();  
+            break;
         default:
             // Page non trouvée
             http_response_code(404);

@@ -29,6 +29,6 @@ class LoginController
 
         // Rendu de la vue avec les erreurs
         $view = new View();
-        $view->render('login', ['errors' => $errors]);
+        $view->render('login', ['title' => 'login', 'errors' => $errors]);
     }
 }

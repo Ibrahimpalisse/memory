@@ -76,6 +76,6 @@ class RegisterController {
 
         // Rendu de la vue d'inscription
         $view = new View();
-        $view->render('register');
+        $view->render('register', ['title' => 'register', 'errors' => $errors]);
     }
 }
